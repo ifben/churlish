@@ -1,4 +1,7 @@
 mod words;
+
+// this testing branch is going to be used to try to get this code a bit less spaghetti'd
+
 // words.rs simply moves the creation of the word list vector into a separate file
 // for the sake of code readability.
 
