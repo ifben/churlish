@@ -200,7 +200,6 @@ Incorrect letters must be added to the --wrong (-w) argument.
             }
         }
     }
-    // is new needed?
     for j in 0..chars.len() {
         if chars[j].is_lowercase() {
             // lowercase letters are much more confusing, as we need to check that
@@ -220,9 +219,8 @@ Incorrect letters must be added to the --wrong (-w) argument.
                         if guesses[4] == "?" {
                             guesses[4] = chars[j].to_string();
                         } else if guesses[4].chars().nth(guesses[4].len() - 1).unwrap() != chars[j] {
-                            // prevent addidn duplicate letters to the wrong position letters
+                            // prevent adding duplicate letters to the wrong position letters
                             // in the vector
-                            //let new = concat_string!(guesses[4], chars[j].to_string());
                             guesses[4] = concat_string!(guesses[4], chars[j].to_string());
                         }
                     } else if guesses[4].chars().nth(0).unwrap().is_uppercase() {
@@ -234,7 +232,6 @@ Incorrect letters must be added to the --wrong (-w) argument.
                         if guesses[5] == "?" {
                             guesses[5] = chars[j].to_string();
                         } else if guesses[5].chars().nth(guesses[5].len() - 1).unwrap() != chars[j] {
-                            //let new = concat_string!(guesses[5], chars[j].to_string());
                             guesses[5] = concat_string!(guesses[5], chars[j].to_string());
                         }
                     }
@@ -246,14 +243,12 @@ Incorrect letters must be added to the --wrong (-w) argument.
                         if guesses[0] == "?" {
                             guesses[0] = chars[j].to_string();
                         } else if guesses[0].chars().nth(guesses[0].len() - 1).unwrap() != chars[j] {
-                            //let new = concat_string!(guesses[0], chars[j].to_string());
                             guesses[0] = concat_string!(guesses[0], chars[j].to_string());
                         }
                     } else if guesses[0].chars().nth(0).unwrap().is_uppercase() {
                         if guesses[5] == "?" {
                             guesses[5] = chars[j].to_string();
                         } else if guesses[5].chars().nth(guesses[5].len() - 1).unwrap() != chars[j] {
-                            //let new = concat_string!(guesses[5], chars[j].to_string());
                             guesses[5] = concat_string!(guesses[5], chars[j].to_string());
                         }
                     }
@@ -265,14 +260,12 @@ Incorrect letters must be added to the --wrong (-w) argument.
                         if guesses[1] == "?" {
                             guesses[1] = chars[j].to_string();
                         } else if guesses[1].chars().nth(guesses[1].len() - 1).unwrap() != chars[j] {
-                            //let new = concat_string!(guesses[1], chars[j].to_string());
                             guesses[1] = concat_string!(guesses[1], chars[j].to_string());
                         }
                     } else if guesses[1].chars().nth(0).unwrap().is_uppercase() {
                         if guesses[5] == "?" {
                             guesses[5] = chars[j].to_string();
                         } else if guesses[5].chars().nth(guesses[5].len() - 1).unwrap() != chars[j] {
-                            //let new = concat_string!(guesses[5], chars[j].to_string());
                             guesses[5] = concat_string!(guesses[5], chars[j].to_string());
                         }
                     }
@@ -284,14 +277,12 @@ Incorrect letters must be added to the --wrong (-w) argument.
                         if guesses[2] == "?" {
                             guesses[2] = chars[j].to_string();
                         } else if guesses[2].chars().nth(guesses[2].len() - 1).unwrap() != chars[j] {
-                            //let new = concat_string!(guesses[2], chars[j].to_string());
                             guesses[2] = concat_string!(guesses[2], chars[j].to_string());
                         }
                     } else if guesses[2].chars().nth(0).unwrap().is_uppercase() {
                         if guesses[5] == "?" {
                             guesses[5] = chars[j].to_string();
                         } else if guesses[5].chars().nth(guesses[5].len() - 1).unwrap() != chars[j] {
-                            //let new = concat_string!(guesses[5], chars[j].to_string());
                             guesses[5] = concat_string!(guesses[5], chars[j].to_string());
                         }
                     }
@@ -303,14 +294,12 @@ Incorrect letters must be added to the --wrong (-w) argument.
                         if guesses[3] == "?" {
                             guesses[3] = chars[j].to_string();
                         } else if guesses[3].chars().nth(guesses[3].len() - 1).unwrap() != chars[j] {
-                            //let new = concat_string!(guesses[3], chars[j].to_string());
                             guesses[3] = concat_string!(guesses[3], chars[j].to_string());
                         }
                     } else if guesses[3].chars().nth(0).unwrap().is_uppercase() {
                         if guesses[5] == "?" {
                             guesses[5] = chars[j].to_string();
                         } else if guesses[5].chars().nth(guesses[5].len() - 1).unwrap() != chars[j] {
-                            //let new = concat_string!(guesses[5], chars[j].to_string());
                             guesses[5] = concat_string!(guesses[5], chars[j].to_string());
                         }
                     }
@@ -323,7 +312,7 @@ Incorrect letters must be added to the --wrong (-w) argument.
     // now that we have our vector full of possible guesses, we need to build
     // the regular expression pattern to test against words. this is done kind of
     // messily with string concatenation. basically, we treat incorrectly placed letters
-    // as positive lookarounds, we treat correctly placed letters as simply themselves,
+    // as positive lookaheads, we treat correctly placed letters as simply themselves,
     // then we add impossible letters to a [^] for the unmatched letter space
 
 
@@ -350,7 +339,7 @@ Incorrect letters must be added to the --wrong (-w) argument.
             }
 
             lookaheads_vec.sort();
-            lookaheads_vec.dedup(); // removes any duplicate lookeaheads
+            lookaheads_vec.dedup(); // removes any duplicate lookaheads
             
             letter_expression.push_str(&concat_string!(String::from("[^"), wrong.unwrap(), guesses[i], String::from("]")));
         }
@@ -419,7 +408,7 @@ Incorrect letters must be added to the --wrong (-w) argument.
             }
 
             if dupe[0] == '?' {
-                //no dupes, print resutls as normal!
+                //no dupes, print results as normal!
                 println!("{}: {}", j, words[i]);
                 j += 1;
             }
@@ -427,7 +416,7 @@ Incorrect letters must be added to the --wrong (-w) argument.
     }
 
     if j == 1 {
-        // this is probaby a lame/hacky way of handling another edge case,
+        // this is probably a lame/hacky way of handling another edge case,
         // but in case someone accidentally puts a confirmed letter into the
         // wrong letters argument, we check for any matching characters and
         // suggest that it might be an input error. it seems inessential to do this
@@ -448,7 +437,7 @@ Incorrect letters must be added to the --wrong (-w) argument.
 
 fn dupe_check(pattern: String) -> Vec<char> {
     // this is probably a convoluted solution to a problem with our regex.
-    // positive lookarounds cannot be iterated, so we can't tell our regex
+    // positive lookaheads cannot be iterated, so we can't tell our regex
     // to match 'a' anywhere in the word 2 times. instead, dupe_check returns
     // a vector that tracks duplicated letters, and we can then filter our regex
     // results to match our dupe_check value
@@ -464,7 +453,7 @@ fn dupe_check(pattern: String) -> Vec<char> {
 
     // another nice assumption we can make: any 3 letter duplicate word like GEESE
     // will also have one of those e's in the correct place, so our filtered regex will
-    // match correctly even on a non-sensical pattern like eE?e? for GEESE, and correctly
+    // match correctly even on a non-word pattern like eE?e? for GEESE, and correctly
     // returns only words with 3 e's.
 
     let chars: Vec<_> = pattern.to_lowercase().chars().collect();
@@ -483,170 +472,25 @@ fn dupe_check(pattern: String) -> Vec<char> {
         guess_vec.retain(|&x| x != '?');
         // remove wrong guesses, which aren't necessary
         for _i in 0..guesses {
-            // here comes a whole lot of if tests. this could be cleaned up with a loop, but
-            // again i'm not sure the code would run faster
-            if guess_vec.len() == 5 {
-                if guess_vec[0] == guess_vec[1] {
-                    if dupes_vec[0] == '?' {
-                        dupes_vec[0] = guess_vec[0];
-                        dupes_vec[1] = '2';
-                    } else if dupes_vec[0] != '?' {
-                        dupes_vec[2] = guess_vec[0];
-                        dupes_vec[3] = '2';
+            for i in 0..guess_vec.len() {
+                // compare all guessed letters against each other to match any duplicates
+                // there are probably faster methods, but we're talking about microseconds here
+                let mut j = i + 1; 
+                while j < guess_vec.len() {
+                    if i != j && guess_vec[i] == guess_vec[j] {
+                        if dupes_vec[0] == '?' {
+                            dupes_vec[0] = guess_vec[i];
+                            dupes_vec[1] = '2';
+                        } else if dupes_vec[0] != '?' && dupes_vec[0] != guess_vec[i] && dupes_vec[2] != guess_vec[i] {
+                            dupes_vec[2] = guess_vec[i];
+                            dupes_vec[3] = '2';
+                        } else if dupes_vec[2] != '?' && dupes_vec[2] == guess_vec[i] { 
+			                dupes_vec[3] = '3';
+			            } else {
+                            dupes_vec[1] = '3';
+                        }
                     }
-                }
-                if guess_vec[0] == guess_vec[2] {
-                    if dupes_vec[0] == '?' {
-                        dupes_vec[0] = guess_vec[0];
-                        dupes_vec[1] = '2';
-                    } else if dupes_vec[0] != '?' {
-                        dupes_vec[2] = guess_vec[0];
-                        dupes_vec[3] = '2';
-                    }
-                }
-                if guess_vec[0] == guess_vec[3] {
-                    if dupes_vec[0] == '?' {
-                        dupes_vec[0] = guess_vec[0];
-                        dupes_vec[1] = '2';
-                    } else if dupes_vec[0] != '?' {
-                        dupes_vec[2] = guess_vec[0];
-                        dupes_vec[3] = '2';
-                    }
-                }
-                if guess_vec[0] == guess_vec[4] {
-                    if dupes_vec[0] == '?' {
-                        dupes_vec[0] = guess_vec[0];
-                        dupes_vec[1] = '2';
-                    } else if dupes_vec[0] != '?' {
-                        dupes_vec[2] = guess_vec[0];
-                        dupes_vec[3] = '2';
-                    }
-                }
-                if guess_vec[1] == guess_vec[2] {
-                    if dupes_vec[0] == '?' {
-                        dupes_vec[0] = guess_vec[1];
-                        dupes_vec[1] = '2';
-                    } else if dupes_vec[0] != '?' {
-                        dupes_vec[2] = guess_vec[1];
-                        dupes_vec[3] = '2';
-                    }
-                }
-                if guess_vec[1] == guess_vec[3] {
-                    if dupes_vec[0] == '?' {
-                        dupes_vec[0] = guess_vec[1];
-                        dupes_vec[1] = '2';
-                    } else if dupes_vec[0] != '?' {
-                        dupes_vec[2] = guess_vec[1];
-                        dupes_vec[3] = '2';
-                    }
-                }
-                if guess_vec[1] == guess_vec[4] {
-                    if dupes_vec[0] == '?' {
-                        dupes_vec[0] = guess_vec[1];
-                        dupes_vec[1] = '2';
-                    } else if dupes_vec[0] != '?' {
-                        dupes_vec[2] = guess_vec[1];
-                        dupes_vec[3] = '2';
-                    }
-                }
-                if guess_vec[2] == guess_vec[3] {
-                    if dupes_vec[0] == '?' {
-                        dupes_vec[0] = guess_vec[2];
-                        dupes_vec[1] = '2';
-                    } else if dupes_vec[0] != '?' {
-                        dupes_vec[2] = guess_vec[2];
-                        dupes_vec[3] = '2';
-                    }
-                }
-                if guess_vec[2] == guess_vec[4] {
-                    if dupes_vec[0] == '?' {
-                        dupes_vec[0] = guess_vec[2];
-                        dupes_vec[1] = '2';
-                    } else if dupes_vec[0] != '?' {
-                        dupes_vec[2] = guess_vec[2];
-                        dupes_vec[3] = '2';
-                    }
-                }
-                if guess_vec[3] == guess_vec[4] {
-                    if dupes_vec[0] == '?' {
-                        dupes_vec[0] = guess_vec[3];
-                        dupes_vec[1] = '2';
-                    } else if dupes_vec[0] != '?' {
-                        dupes_vec[2] = guess_vec[3];
-                        dupes_vec[3] = '2';
-                    }
-                }
-            }
-            if guess_vec.len() == 4 {
-                if guess_vec[0] == guess_vec[1] {
-                    if dupes_vec[0] == '?' {
-                        dupes_vec[0] = guess_vec[0];
-                        dupes_vec[1] = '2';
-                    } else if dupes_vec[0] != '?' {
-                        dupes_vec[2] = guess_vec[0];
-                        dupes_vec[3] = '2';
-                    }
-                }
-                if guess_vec[0] == guess_vec[2] {
-                    if dupes_vec[0] == '?' {
-                        dupes_vec[0] = guess_vec[0];
-                        dupes_vec[1] = '2';
-                    } else if dupes_vec[0] != '?' {
-                        dupes_vec[2] = guess_vec[0];
-                        dupes_vec[3] = '2';
-                    }
-                }
-                if guess_vec[0] == guess_vec[3] {
-                    if dupes_vec[0] == '?' {
-                        dupes_vec[0] = guess_vec[0];
-                        dupes_vec[1] = '2';
-                    } else if dupes_vec[0] != '?' {
-                        dupes_vec[2] = guess_vec[0];
-                        dupes_vec[3] = '2';
-                    }
-                }
-                if guess_vec[1] == guess_vec[2] {
-                    if dupes_vec[0] == '?' {
-                        dupes_vec[0] = guess_vec[1];
-                        dupes_vec[1] = '2';
-                    } else if dupes_vec[0] != '?' {
-                        dupes_vec[2] = guess_vec[1];
-                        dupes_vec[3] = '2';
-                    }
-                }
-                if guess_vec[1] == guess_vec[3] {
-                    if dupes_vec[0] == '?' {
-                        dupes_vec[0] = guess_vec[1];
-                        dupes_vec[1] = '2';
-                    } else if dupes_vec[0] != '?' {
-                        dupes_vec[2] = guess_vec[1];
-                        dupes_vec[3] = '2';
-                    }
-                }
-                if guess_vec[2] == guess_vec[3] {
-                    if dupes_vec[0] == '?' {
-                        dupes_vec[0] = guess_vec[2];
-                        dupes_vec[1] = '2';
-                    } else if dupes_vec[0] != '?' {
-                        dupes_vec[2] = guess_vec[2];
-                        dupes_vec[3] = '2';
-                    }
-                }
-            } else if guess_vec.len() == 3 {
-                if guess_vec[0] == guess_vec[1] && guess_vec[0] == guess_vec[2] {
-                    dupes_vec[0] = guess_vec[0];
-                    dupes_vec[1] = '3';
-                } else if guess_vec[0] == guess_vec[1] {
-                    dupes_vec[0] = guess_vec[0];
-                    dupes_vec[1] = '2';
-                } else if guess_vec[1] == guess_vec[2] {
-                    dupes_vec[0] = guess_vec[1];
-                    dupes_vec[1] = '2';
-                }
-            } else if guess_vec.len() == 2 {
-                if guess_vec[0] == guess_vec[1] {
-                    dupes_vec[0] = guess_vec[0];
-                    dupes_vec[1] = '2';
+                    j += 1;
                 }
             }
         }
