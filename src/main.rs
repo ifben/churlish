@@ -481,7 +481,7 @@ fn dupe_check(pattern: String) -> Vec<char> {
         }
         // this allows us to rebuild a vector of guesses for each round of guess inputted
         guess_vec.retain(|&x| x != '?');
-        // remove wrong guesses, which aren't necesesary
+        // remove wrong guesses, which aren't necessary
         for _i in 0..guesses {
             // here comes a whole lot of if tests. this could be cleaned up with a loop, but
             // again i'm not sure the code would run faster
