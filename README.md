@@ -1,30 +1,30 @@
-## churlish: a wordle guesser
+# churlish: a wordle guesser
 
-churlish is a simple commandline wordle guesser that tracks multiple wordle guesses to provide an accurate list of valid guesses. It makes use of [fancy-regex](https://crates.io/crates/fancy-regex) and uses positive lookaheads for precise word matching. Please note: I wrote this tool mostly to practice completing something (relatively) useful in Rust, which I am very much in the process of learning. There is likely to be a lot of bad, non-idiomatic code here, which I will work on improving. But, in all my tests, it is working! 
+churlish is a simple commandline wordle guesser that tracks multiple wordle guesses to provide an accurate list of valid guesses. It makes use of [fancy-regex](https://crates.io/crates/fancy-regex) and uses positive lookaheads for precise word matching. Please note: I wrote this tool mostly to practice completing something (relatively) useful in Rust, which I am very much in the process of learning. There is likely to be a lot of bad, non-idiomatic code here, which I will work on improving. But, in all my tests, it is working!
 
-### Installation
+## Installation
 
 Since this is just a tiny CLI program made for myself, there are no real plans to package it beyond providing the source here. So, feel free to build it from source.
 
-### Usage
+## Usage
 
-churlish works by taking the results of your wordle guess described in a simple pattern and returning a list of valid guesses. For wrong letters (gray), these are inputted as a ```?```. For misplaced letters (yellow), these are inputted in their position as lowercase letters. For correctly placed letters, these are inputted in their position as uppercase letters. For example, consider a wordle first guess result of: 
+churlish works by taking the results of your wordle guess described in a simple pattern and returning a list of valid guesses. For wrong letters (gray), these are inputted as a ```?```. For misplaced letters (yellow), these are inputted in their position as lowercase letters. For correctly placed letters, these are inputted in their position as uppercase letters. For example, consider a wordle first guess result of:
 
 ![example wordle result](https://i.imgur.com/QcKXcpM.png)
 
 This would be entered into ```churlish``` as ```-1 '?r?T?'```, with ```CAE``` given to the ```--wrong``` or ```-w``` argument.  
 
-**Note**: question marks in most shells will match filenames, so inputting ```?????``` into ```churlish``` may input the name of a 5-letter file into ```churlish```. This can be fixed by simply single-quoting your pattern as, for example, ```'?????'```. This will of course depend on where ```churlish``` is located locally. 
+**Note**: question marks in most shells will match filenames, so inputting ```?????``` into ```churlish``` may input the name of a 5-letter file into ```churlish```. This can be fixed by simply single-quoting your pattern as, for example, ```'?????'```. This will of course depend on where ```churlish``` is located locally.
 
-```churlish``` was built for wordle, so it supports entering 4 possible guess patterns. It can be used in wordle derivatives like quordle, but you must take care to not enter impossible pattern options. 
+```churlish``` was built for wordle, so it supports entering 4 possible guess patterns. It can be used in wordle derivatives like quordle, but you must take care to not enter impossible pattern options.
 
-### Example
+## Example
 
-Let's try an interactive example. Let's say we follow [3Blue1Brown's advice](https://www.youtube.com/watch?v=fRed0Xmc2Wg) and choose **CRATE** as our first guess. We then get the following result: 
+Let's try an interactive example. Let's say we follow [3Blue1Brown's advice](https://www.youtube.com/watch?v=fRed0Xmc2Wg) and choose **CRATE** as our first guess. We then get the following result:
 
 ![first demo guess](https://i.imgur.com/zpwwHB4.png)
 
-Our pattern into ```churlish``` would then be: ```???t?``` with ```CRAE``` to give to the ```--wrong``` argument: 
+Our pattern into ```churlish``` would then be: ```???t?``` with ```CRAE``` to give to the ```--wrong``` argument:
 
 ```churlish -1 '???t?' -w crae```
 
@@ -33,7 +33,7 @@ Not a great first guess this time, and ```churlish``` gives us 369 valid guesses
 <details>
     <summary>churlish output</summary>
 
-```
+```sh
 1: shtup
 2: thins
 3: tunny
@@ -404,35 +404,38 @@ Not a great first guess this time, and ```churlish``` gives us 369 valid guesses
 368: stout
 369: motis
 ```
+
 </details>
 
-Let's say we then choose **STUMP** from this long list: 
+Let's say we then choose **STUMP** from this long list:
 
 ![second wordle guess](https://i.imgur.com/NGTAt4j.png)
 
-Now we're getting somewhere! We would then add ```-2 'Stu??'``` to our ```churlish``` command, and we can add ```MP``` to ```--wrong```. 
+Now we're getting somewhere! We would then add ```-2 'Stu??'``` to our ```churlish``` command, and we can add ```MP``` to ```--wrong```.
 
 ```churlish -1 '???t?' -2 'Stu??' -w craemp```
 
-```churlish``` has now narrowed our valid guesses down to 4: 
+```churlish``` has now narrowed our valid guesses down to 4:
 
-```
+```sh
 1: situs
 2: suint
 3: shout
 4: snout
 ```
 
-Time to get lucky. Let's say we guess **SHOUT**: 
+Time to get lucky. Let's say we guess **SHOUT**:
 
 ![third wordle guess](https://i.imgur.com/qGaFwUc.png)
 
-STUPID WORDLE. However, ```churlish``` does not care about our pain. Our third pattern would then be ```-3 'S?OUT'```, with wrong letters ```H``` to add: 
+STUPID WORDLE. However, ```churlish``` does not care about our pain. Our third pattern would then be ```-3 'S?OUT'```, with wrong letters ```H``` to add:
 
 ```churlish -1 '???t?' -2 '?tu??' -3 'u??iT' -w craemph```
 
-```churlish``` now gives us the only remaining answer: 
-```
+```churlish``` now gives us the only remaining answer:
+
+```sh
 1: snout
 ```
-Try it for yourself and see! 
+
+Try it for yourself and see!
