@@ -470,6 +470,7 @@ fn dupe_check(pattern: String) -> Vec<char> {
         }
         // this allows us to rebuild a vector of guesses for each round of guess inputted
         guess_vec.retain(|&x| x != '?');
+
         // remove wrong guesses, which aren't necessary
         for _i in 0..guesses {
             for i in 0..guess_vec.len() {
@@ -485,8 +486,9 @@ fn dupe_check(pattern: String) -> Vec<char> {
                             dupes_vec[2] = guess_vec[i];
                             dupes_vec[3] = '2';
                         } else if dupes_vec[2] != '?' && dupes_vec[2] == guess_vec[i] { 
-			                dupes_vec[3] = '3';
-			            } else {
+			                dupes_vec[3] = '2';
+			            } else if guess_vec[i] != '?' && guess_vec.iter().filter(|&n| *n == guess_vec[0]).count() == 3 {
+                            dupes_vec[0] = guess_vec[0];
                             dupes_vec[1] = '3';
                         }
                     }
